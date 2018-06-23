@@ -24,15 +24,19 @@ class MyWidget(QWidget):
         QMessageBox.about(self, "about the project", "about the project")
         QMessageBox.aboutQt(self)
         
+        self.textline.clear()
+        
     def addButton(self):
         about_button = QPushButton("关于", self)  #创造一个pushbutton，父窗口是这个类实例
         about_button.setGeometry(0, 0, 70 ,30)
         about_button.clicked.connect(self.about_function)
         
-        textline = QLineEdit(self)
-        textline.setGeometry(0, 30, 70, 30)
+        self.textline = QLineEdit(self)
+        self.textline.setGeometry(0, 30, 70, 30)
         
-        
+        self.textline.setText("Please input something.")
+        self.textline.selectAll()
+        self.textline.setFocus()
         
                   
     def Setup(self):
