@@ -26,7 +26,35 @@ class MyWidget(QWidget):
     def move_event(self, value):
         print(value)
     
+    def clickfunc(self, event):
+        print("button is clicked")
+    
+    def keyPressEvent(self, e):
+        #print("key %s is clicked"%e.key())
+        if e.key() == Qt.Key_Up:
+            print("key ↑ is clicked")
+    
+    def mouseMoveEvent(self, event):
+        print(event.x(), event.y())
+        self.pos = event.pos()
+        self.lab.setText("%d-%d"%(self.pos.x(),self.pos.y()))
+        #self.update()
+        return
+    
+    def paintEvent(self, event):
+        if self.pos :
+            q = QPainter(self)
+            q.drawLine(0, 0, self.pos.x(), self.pos.y())
+        
+    def btn_func(self):
+        sender = self.sender()
+        print("sender's name is ", sender.text())
+    
     def addButton(self):
+        self.lab = QLabel(self)
+        self.lab.setText("abc")
+        
+        '''
         lcd = QLCDNumber(self)
         dial = QDial(self)
         
@@ -36,9 +64,22 @@ class MyWidget(QWidget):
         slide = QSlider(self)
         slide.valueChanged.connect(lcd.display)
         
+        button = QPushButton("direction", self)
+        button.setGeometry(0, 100, 80, 30)
+        button.clicked.connect(self.clickfunc)
+        '''
+        btn = QPushButton("Test1", self)
+        btn.clicked.connect(self.btn_func)
+        btn.setGeometry(0, 0, 20, 20)
+        
+        btn2 = QPushButton("Test2", self)
+        btn2.clicked.connect(self.btn_func)
+        btn.setGeometry(20, 0, 20, 50)
                   
     def Setup(self):
-        self.setGeometry(300, 300, 300, 100)
+        self.pos = None
+        
+        self.setGeometry(300, 300, 300, 350)
         self.addTitle()
         self.addIcon()
         self.addButton()
