@@ -8,6 +8,11 @@ from PyQt5.Qt import *
 import PyQt5
 
 #class hiren
+class MySignalClass(QObject):
+    #def __init__(self):
+    print("self.mysignal is inited.")
+    mysignal = pyqtSignal()
+
 
 class MyWidget(QWidget):
     def __init__(self):
@@ -49,6 +54,8 @@ class MyWidget(QWidget):
     def btn_func(self):
         sender = self.sender()
         print("sender's name is ", sender.text())
+        self.mysig.mysignal.emit()
+        
     
     def addButton(self):
         self.lab = QLabel(self)
@@ -75,7 +82,14 @@ class MyWidget(QWidget):
         btn2 = QPushButton("Test2", self)
         btn2.clicked.connect(self.btn_func)
         btn.setGeometry(20, 0, 20, 50)
-                  
+    
+    def mysig_func(self):
+        print("mysig_func is called.")
+    
+    def SetupSignal(self):
+        self.mysig = MySignalClass()    
+        #self.mysig.mysignal.connect(self.mysig_func)
+        self.mysig.mysignal.      
     def Setup(self):
         self.pos = None
         
@@ -83,7 +97,12 @@ class MyWidget(QWidget):
         self.addTitle()
         self.addIcon()
         self.addButton()
+        self.SetupSignal()
+        
+        
         self.show()
+        
+        
         
 if __name__ == "__main__":
     print("program start..")
